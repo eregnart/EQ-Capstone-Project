@@ -1,17 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import LoginView from './views/LoginView';
-import DashboardView from './views/DashboardView';
-import './App.css'
+import React from 'react';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LoginView/>}/>
-        <Route path="/dashboard" element={<DashboardView />} />
-      </Routes>
-    </Router>
-  )
+    <div>
+      <h1>PowerLog App</h1>
+      <p>Welcome to the contractor site check-in system.</p>
+    </div>
+  );
 }
 
 export default App;
