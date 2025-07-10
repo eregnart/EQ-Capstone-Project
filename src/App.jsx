@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import LoginView from "./views/LoginView";
+import SignupView from "./views/SignupView";
 
-function App() {
+export default function App() {
   return (
-    <div>
-      <h1>PowerLog App</h1>
-      <p>Welcome to the contractor site check-in system.</p>
-    </div>
+    <Routes>
+      <Route path="/" element={<LoginView />} />
+      <Route path="/signup" element={<SignupView />} />
+    </Routes>
   );
 }
-
-export default App;
