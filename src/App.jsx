@@ -8,7 +8,7 @@ import CheckEmail from "./views/CheckEmailView.jsx";
 import SetNewPin from "./views/SetNewPinView.jsx";
 import PinReset from "./views/PinResetView.jsx";
 
-import SignupView from "./views/SignupView.jsx";
+import SignupView from "./views/signup/SignupView.jsx";
 import SignupPersonal from "./views/signup/PersonalView.jsx";
 import SignupCompany from "./views/signup/CompanyView.jsx";
 import SignupDone from "./views/signup/Done.jsx";

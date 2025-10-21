@@ -1,8 +1,56 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    color-scheme: light dark;
+/* === Theme tokens === */
+:root {
+  --pl:  #12A4A1;
+  --pld: #0e8886;
+  --pls: #f5fafb;
+}
+
+/* === Background + layout === */
+@layer components {
+  .pl-page {
+    @apply relative min-h-screen text-gray-900;
+    background: #f7fbff url("/src/assets/bg.svg") no-repeat top right / cover;
   }
+  .pl-container { @apply max-w-[380px] mx-auto w-full px-4; }
+  .pl-card {
+    @apply bg-white/90 backdrop-blur rounded-2xl shadow-md border border-gray-100 p-5;
+  }
+  .pl-hero { @apply mt-6 mb-4 flex items-center justify-between; }
+  .pl-title { @apply text-xl font-semibold; }
+
+  /* === Controls === */
+  .pl-input {
+    @apply w-full rounded-lg border border-gray-300 px-3 py-2 outline-none
+           focus:ring-2 focus:ring-[var(--pl)] focus:border-transparent bg-white;
+  }
+  .pl-textarea {
+    @apply w-full rounded-lg border border-gray-300 px-3 py-2 outline-none
+           focus:ring-2 focus:ring-[var(--pl)] focus:border-transparent bg-white;
+  }
+
+  /* === Buttons (no @apply of custom classes) === */
+  .pl-btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-medium text-white transition;
+    background-color: var(--pl);
+  }
+  .pl-btn-primary:hover { background-color: var(--pld); }
+
+  .pl-btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-medium transition
+           border border-gray-300 bg-white hover:bg-gray-100 text-gray-900;
+  }
+
+  .pl-btn-ghost {
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-medium transition
+           text-gray-800 hover:bg-gray-100;
+  }
+
+  .pl-link { @apply underline text-gray-600 hover:text-gray-900; }
+
+  /* === Dashboard tiles === */
+  .pl-tile { @apply rounded-2xl border bg-white shadow-sm p-4; }
+  .pl-stat { @apply text-3xl font-bold text-gray-900; }
+  .pl-stat-label { @apply text-xs uppercase tracking-wide text-gray-500; }
 }

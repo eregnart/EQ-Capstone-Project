@@ -1,64 +1,47 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
-import SignupView from './SignupView';
+import { Link, useNavigate } from "react-router-dom";
+import Shell from "../components/Shell.jsx";
+import { Field, Input, PrimaryBtn } from "../components/UI.jsx";
+import { createAuthPresenter } from "../presenters/AuthPresenter.js";
 
-function Login() {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }, 
-    } = useForm();
+const auth = createAuthPresenter();
 
-    const onSubmit = (data) => {
-        const userData = JSON.parse(localStorage.getItem(data.email)); 
-        if (userData) {
-            if (userData.password === data.password) {
-                console.log(userData.name + "You are Successfully Logged in");
-            } else {
-                console.log("Email or Password is not matching with our record");
-            }
-        } else {
-            console.log("Email or Password is not matching with our record");
-        }
-    };
+export default function LoginView() {
+  const nav = useNavigate();
+  const { register, handleSubmit, formState:{ errors } } = useForm();
 
-    return (
-        <div className="flex flex-col justify-center items-center">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center z-10 italic">
-                Welcome,<br/> Please Log in</h2>
+  const onSubmit = (data) => {
+    const ok = auth.login(data.email, data.password);
+    if (ok) nav("/dashboard");
+    else alert("Email or PIN incorrect");
+  };
 
-            <form className="flex flex-col gap-4 w-full max-w-xs z-10" onSubmit={handleSubmit(onSubmit)}>
+  return (
+    <Shell title="">
+      <div className="space-y-5">
+        <h2 className="text-2xl font-semibold">PowerLog</h2>
 
-                <input type="text" placeholder="Company Name" {...register("company", { required: true })} 
-                className="border border-gray-300 rounded px-4 py-2"/>
-                {errors.company && <span className="text-red-500 text-sm">*Company Name* is mandatory</span>}
+        <Field label="Company Name">
+          <Input placeholder="Energy Queensland" {...register("company")} />
+        </Field>
 
-                <input type="text" placeholder="Your Name" {...register("name", { required: true})} 
-                className="border border-gray-300 rounded px-4 py-2"/> 
-                {errors.name && <span className="text-red-500 text-sm">*Your Name* is required </span>}
+        <Field label="Your Name">
+          <Input placeholder="Jane Contractor" {...register("name", { required:false })} />
+        </Field>
 
-                <input type="password" {...register("password", { required: true})} placeholder="Pin"
-                className="border border-gray-300 rounded px-4 py-2"/>
-                {errors.password && <span style={{ color: "red" }}> *Pin* is mandatory</span>}
+        <Field label="Pin" error={errors.password && "Required"}>
+          <Input type="password" placeholder="••••" {...register("password", { required:true })} />
+          <div className="text-right mt-1">
+            <Link to="/forgot-pin" className="pl-link text-sm">Forgot Pin?</Link>
+          </div>
+        </Field>
 
-                <div className="text-right text-sm">
-                    <button type="button" className="text-gray-600 hover:underline">
-                        Forgot Pin
-                    </button>
-                </div>
-
-                <input type="submit" value="Login!" className="#bg-blue-600 hover:bg-blue-700 text-black p-2 rounded cursor-pointer border-black"/>
-            </form>
-
-            <div className="mt-6 w-full max-w-xs">
-                <Link to="/SignupView"
-                    className="block text-center border-black text-black py-2 rounded hover:bg-gray-100">
-                        Sign up Now!
-                </Link>
-            </div>
+        <div className="grid gap-3">
+          <PrimaryBtn onClick={handleSubmit(onSubmit)}>LOGIN</PrimaryBtn>
+          <Link to="/signup" className="pl-btn-secondary text-center rounded-lg">SIGN UP</Link>
         </div>
-    )
+      </div>
+    </Shell>
+  );
 }
-
-export default Login;
